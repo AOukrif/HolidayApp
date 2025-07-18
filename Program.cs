@@ -26,14 +26,18 @@ class Program
 
             case 2:
                 Dictionary<string, Person> NamesPersonsDict = new Dictionary<string, Person>();
+
+
+                // fill the dictionary 
                 int i = 0;
                 foreach (string person in personsNames)
                 {
                     Person personObj = new Person(personsNames[i]);
                     NamesPersonsDict.Add(personsNames[i], personObj);
                     i++;
-
                 }
+
+                // reading data soent and persons
                 bool again = true;
                 while (again)
                 {
@@ -54,12 +58,20 @@ class Program
                     string againBis = Console.ReadLine();
                     if (againBis == "n") { again = false; }
                 }
-                Console.WriteLine($"the total spent is {Person.totalSpent} ");
-                double averageSpent = Person.totalSpent / NamesPersonsDict.Count;
 
-                List<Person> sendersList = new List<Person>(); // only person with diffrence != 0
+                // calculating the average and the total spent 
+                List<double> dispences = new List<double>();
+                foreach (Person person in NamesPersonsDict.Values)
+                {
+                    dispences.Add(person.MoneySpent);
+                }
+                double averageSpent = dispences.Average();
+                Console.WriteLine($"the total spent is {dispences.Sum()} ");
+                Console.WriteLine($"the average spent by person is {dispences.Average()} ");
+
+                // defining the sender and the receiver of money at the end of the trip 
+                List<Person> sendersList = new List<Person>(); 
                 List<Person> receiverList = new List<Person>();
-
                 foreach (Person person in NamesPersonsDict.Values)
                 {
                     person.diffrenceSpent = person.MoneySpent - averageSpent;
@@ -71,6 +83,7 @@ class Program
                     }
                 }
                 
+                // regulation 
                 foreach (Person sender in sendersList)
                 {
                     foreach (Person receiver in receiverList)
