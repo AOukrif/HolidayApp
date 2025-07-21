@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Numerics;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,19 +32,13 @@ namespace RandomChoser
         public string name
         {
             get => _name;
-            // TODO: Describe what you want to do here
+            
             set
             {
-                if (value.Contains(" ")) 
-                {
-                    Console.WriteLine("no white space allowed "); 
-                }
+                _name = value; 
             }
         }
-        public string GetName()
-        {
-            return name;
-        }
+        
         public double moneySpent
         {
             get => _moneySpent;
@@ -88,23 +83,49 @@ namespace RandomChoser
             return "error ";
             
         }
+
+        public static string[] ReadNames(char separator ) 
+        {
+            string names;
+            string[] personsNames=null;
+            bool valide = false;
+            while (!valide)
+            {
+                Console.WriteLine("\n\t\tEnter the names of the persons in the trip  ");
+                Console.Write("\n\t\t->");
+                names = Console.ReadLine();
+                personsNames = names.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                valide = true;
+                foreach (string name in personsNames)
+                {
+                    string trimedName = name.Trim();
+                    
+                    if (!trimedName.All(char.IsLetter))
+                    {
+                        Console.WriteLine("only letter accepted");
+                        valide = false;
+                        break;
+                        
+                    }
+                }
+
+            }
+            return personsNames;
+        }
+
         public static Dictionary<string, Person> Initialize()
         {
-            Console.WriteLine("\n\t\tEnter the names of the persons in the trip  ");
-            Console.Write("\n\t\t->");
-            string names = Console.ReadLine();
-            string[] personsNames = names.Split(' ');
+            string[] personsNames = ReadNames(' ');
+
             Dictionary<string, Person> NamesPersonsDict = new Dictionary<string, Person>();
             // fill the dictionary 
-            int i = 0;
+            
             foreach (string person in personsNames)
             {
-                Person personObj = new Person(personsNames[i]);
-                NamesPersonsDict.Add(personsNames[i], personObj);
-                i++;
+                Person personObj = new Person(person.Trim());
+                NamesPersonsDict.Add(person, personObj);
             }
             return NamesPersonsDict;
-
         }
         public static void ReadDispence(Dictionary<string, Person> NamesPersonsDict)
         {

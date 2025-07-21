@@ -8,6 +8,7 @@ class Program
     public static int UserChoice()
     {
         int choice = 0;
+        List<int> goodChoices = Enumerable.Range(1, 2).ToList();
         while (true)
         {
             Console.WriteLine("\n" +
@@ -25,14 +26,14 @@ class Program
                 Console.WriteLine($"\n\tplease enter a number from the list");
                 continue;
             }
-            if (choice == 1 || choice == 2) 
+            if (goodChoices.Contains(choice)) 
             {
                 break;
             }
             else
             {
                 Console.Clear ();
-                Console.WriteLine($"\n\tPlease select only from the available options ");
+                Console.WriteLine($"\n\tPlease select only from the available options {string.Join(",",goodChoices)} ");
             }
         }
         return choice;
