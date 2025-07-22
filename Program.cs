@@ -1,48 +1,17 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 using System.Runtime.InteropServices;
+using Holidays._1__Services;
+using Holidays._2_Utils;
 using RandomChoser;
 
 class Program
 {
-    public static int UserChoice()
-    {
-        int choice = 0;
-        List<int> goodChoices = Enumerable.Range(1, 2).ToList();
-        while (true)
-        {
-            Console.WriteLine("\n" +
-                "\tyou want to : \n\n " +
-            "\t\t1 - Choose a random person \n\r " +
-            "\t\t2 - Calculate the total spent with the tricount ");
-            try
-            {
-                Console.Write($"\n\t\t->");
-                choice = int.Parse(Console.ReadLine());
-            }
-            catch(FormatException e)
-            {
-                Console.Clear();
-                Console.WriteLine($"\n\tplease enter a number from the list");
-                continue;
-            }
-            if (goodChoices.Contains(choice)) 
-            {
-                break;
-            }
-            else
-            {
-                Console.Clear ();
-                Console.WriteLine($"\n\tPlease select only from the available options {string.Join(",",goodChoices)} ");
-            }
-        }
-        return choice;
-    }
-    
     public static void Main()
     {
-        int choice = UserChoice();
-        Dictionary<string, Person> NamesPersonsDict = Person.Initialize();
+        int choice = InputValidator.UserChoice();
+
+        Dictionary<string, Person> NamesPersonsDict = InputValidator.Initialize();
 
         switch (choice)
         {
@@ -74,8 +43,9 @@ class Program
                 break;
 
             case 2:
-                Person.ReadDispence(NamesPersonsDict);
-                double averageSpent = Person.getAverageSpent(NamesPersonsDict);
+                InputValidator.ReadDispence(NamesPersonsDict);
+                TripServices tripServices = new TripServices();
+                double averageSpent = tripServices.getAverageSpent(NamesPersonsDict);
 
                 // defining the sender and the receiver of money at the end of the trip 
                 List<Person> sendersList = new List<Person>(); 
@@ -90,7 +60,7 @@ class Program
                         sendersList.Add(person);
                     }
                 }
-                Person.Regulation(sendersList, receiverList);
+                tripServices.Regulation(sendersList, receiverList);
                 break; 
         }
     }
