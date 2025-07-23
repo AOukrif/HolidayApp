@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Holidays._0_Models;
 using Holidays._1__Services;
 using RandomChoser;
 
@@ -71,7 +72,7 @@ namespace Holidays._2_Utils
             }
             return personsNames;
         }
-        public static Dictionary<string, Person> Initialize()
+        public static Dictionary<string, Person> InitializePersons()
         {
             string[] personsNames = ReadNames(' ');
 
@@ -120,5 +121,7 @@ namespace Holidays._2_Utils
                 if (againBis == "n") { again = false; }
             }
         }
+
+       
     }
 }

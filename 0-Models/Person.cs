@@ -17,16 +17,9 @@ namespace RandomChoser
         private double _moneySpent = 0;
         public double diffrenceSpent;
 
+
+        public string name { get; set; }
         
-        public string name
-        {
-            get => _name;
-            
-            set
-            {
-                _name = value; 
-            }
-        }
         
         public double moneySpent
         {

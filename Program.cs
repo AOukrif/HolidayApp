@@ -11,7 +11,7 @@ class Program
     {
         int choice = InputValidator.UserChoice();
 
-        Dictionary<string, Person> NamesPersonsDict = InputValidator.Initialize();
+        Dictionary<string, Person> NamesPersonsDict = InputValidator.InitializePersons();
 
         switch (choice)
         {

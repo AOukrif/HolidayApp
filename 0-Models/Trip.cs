@@ -14,8 +14,11 @@ namespace Holidays._0_Models
         private Person[] persons;
         private  double _totalSpent=0;
         private  double _averageSpent=0;
+        public DateOnly startingDate;
+        public double budget; 
         
         public string city { get ;set;}
+        public double numbeOfPerson { get; set; }
         public  double totalSpent
         {
             get => _totalSpent;
@@ -38,21 +41,12 @@ namespace Holidays._0_Models
                 
             }
         }
-        public double numbeOfPerson
-        {
-            get => _numbeOfPerson;
-            set
-            {
-                if (value <= 0) 
-                {
-                    Console.WriteLine("the number of person must be positive");
-                }
-
-            }
-        }
+        
         public Trip(string city ,  int numberOfPerson)
         {
+            
             numbeOfPerson = numberOfPerson;
+
             persons = new Person[numberOfPerson];
             
         }
