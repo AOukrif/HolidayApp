@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Holidays._0_Models;
+using RandomChoser;
 
 namespace Holidays._2_Utils
 {
@@ -11,34 +12,16 @@ namespace Holidays._2_Utils
     {
         public static Trip InitilizeTrip()
         {
-            int numberOfPerson;
-            string city;
-            DateOnly startOfTrip;
-
-            while (true)
-            {
-
-                Console.Write($" \t\t Welcom to the holidays App \n\t\t Let's define your trip \n");
-                city = ReadCity();
-
-
-
-
-                
-
-                Console.Write($"{city} is a nice city to visite , how many persons would you be ? \n\t\t ->");
-                numberOfPerson = int.Parse(Console.ReadLine());
-                if (numberOfPerson <= 0)
-                {
-                    Console.WriteLine("the number of person must be positive");
-                    continue;
-                }
-                break;
-
-
-
-            }
-            Trip trip = new Trip(city, numberOfPerson);
+            Console.Write($" \t\t Welcom to the holidays App \n\n\t\t Let's define your trip \n");
+            string city = ReadCity();
+            Console.Write($"\n\t\t {city} is a nice city to visite\n\t\t");
+            int numberOfPerson = ReadnumberOfPerson();
+            Console.Write($"\n\t\t{city} for {numberOfPerson} persons\n\t\t");
+            DateOnly tripDay=ReadTripDate();
+            double budget = ReadBudget();
+            Dictionary<string, Person> persons = PersonInput.InitializePersons(numberOfPerson);
+            Trip trip = new Trip(city, numberOfPerson,tripDay, budget, persons);
+            Console.WriteLine($"the trip to {city} is well created");
             return trip;
 
         }
@@ -48,17 +31,83 @@ namespace Holidays._2_Utils
             string input;
             while (true) 
             {
-                Console.Write($"\t\t Enter the city for your trip \n\t\t->");
-                input= Console.ReadLine().Trim();
-                if (!input.All(char.IsLetter) || string.IsNullOrEmpty(input))
+                Console.Write($"\n\t\t Enter the city for your trip \n\t\t-> ");
+                input= Console.ReadLine()?.Trim();
+                if (!input.All(char.IsLetter) || string.IsNullOrEmpty(input) )
                 {
-                    Console.WriteLine("the city name must contain letters only ");
+                    Console.WriteLine("\n\t\tthe city name must contain letters only ");
                     continue;
 
                 }
                 break;
             }
             return input;
+        }
+        public static int ReadnumberOfPerson() 
+        {
+            int input=0;
+            while (true)
+            {
+                Console.Write("\t\t How many person would you be ? \n\t\t ->");
+                try
+                {
+                    input = int.Parse(Console.ReadLine());
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"{e.Message}");
+                    continue;
+                }
+                if(input <= 0)
+                {
+                    Console.WriteLine("number of person must be positive");
+                    continue;
+                }
+                break;
+            }
+
+            return input;
+        }
+        public static DateOnly ReadTripDate()
+        {
+            DateOnly input;
+            while (true)
+            {
+                Console.Write("\n\t\t enter the date in format yyyy-mm-dd\n\t\t -> ");
+                try
+                {
+                    input = DateOnly.Parse(Console.ReadLine());
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    continue;
+                }
+                if (input < DateOnly.FromDateTime(DateTime.Today))
+                {
+                    Console.WriteLine("\n\t\tDate already passed\n\t\t ");
+                    continue;
+                }
+                break;
+            }
+            
+            return input; 
+        }
+        public static double ReadBudget()
+        {
+            double input=0;
+            while (true)
+            {
+                Console.Write("\n\t\twhat is you budget ? -> \n\t\t ");
+                input= double.Parse(Console.ReadLine());
+                if (input < 0)
+                {
+                    Console.WriteLine("\n\t\tbudget must be positive\n\t\t");
+                    continue;
+                }
+                break;
+            }
+            return input; 
         }
     }
 }

@@ -13,7 +13,8 @@ namespace Holidays._1__Services
         public abstract void spent(Person person, double coast , Trip trip);
         public abstract string sendMoney(Person sender, Person receiver);
         public abstract void Regulation(List<Person> sendersList, List<Person> receiverList);
-        public abstract double getAverageSpent(Dictionary<string, Person> NamesPersonsDict);
+        public abstract double getAverageSpent(Trip trip);
+        public abstract Person RandomPerson(Trip trip);
 
 
     }

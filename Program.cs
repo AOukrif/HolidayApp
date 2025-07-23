@@ -1,6 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 using System.Runtime.InteropServices;
+using Holidays._0_Models;
 using Holidays._1__Services;
 using Holidays._2_Utils;
 using RandomChoser;
@@ -9,48 +10,44 @@ class Program
 {
     public static void Main()
     {
-        int choice = InputValidator.UserChoice();
+        Trip trip = TripInput.InitilizeTrip();
+        int choice = UIActions.UserChoice();
 
-        Dictionary<string, Person> NamesPersonsDict = InputValidator.InitializePersons();
-
+        TripServices tripService = new TripServices();
         switch (choice)
         {
             case 1:
-                bool again = true;
-                bool subAgain = true;
-                while (again)
+                Person chosen = tripService.RandomPerson(trip);
+                Console.WriteLine($"\n\t\tThe chosen is {chosen.name}");
+                
+                while (true)
                 {
-                    Random random = new Random();
-                    int randomIndex = random.Next(0,NamesPersonsDict.Count);
-                    Console.WriteLine($"\n\t\tThe chosen is {NamesPersonsDict.Keys.ElementAt(randomIndex)}");
-                    while (subAgain)
+                    Console.Write($"\t\tDo you want to choose again ? (y/n) \n\t\t->  ");
+                    string againInput = Console.ReadLine()?.ToLower();
+                    if (againInput == "y" || againInput == "n")
                     {
-                        Console.Write($"\t\tDo you want to choose again ? (y/n) \n\t\t->  ");
-                        string againInput = Console.ReadLine().ToLower();
-                        if (againInput == "y" || againInput == "n")
-                        {
-                            if (againInput == "y") { break; subAgain = false; }
-                            else { again = false; subAgain = false; }
-                        }
-                        else
-                        {
-                            Console.Write("\n\t\tplease chose only y/n \n");
+                        if (againInput == "y") {
+                            chosen = tripService.RandomPerson(trip);
+                            Console.WriteLine($"\n\t\tThe chosen is {chosen.name}");
                             continue;
                         }
+                        else { break; }
                     }
-                    continue;
+                    else
+                    {
+                        Console.Write("\n\t\tplease chose only y/n \n");
+                        continue;
+                    }
                 }
                 break;
 
             case 2:
-                InputValidator.ReadDispence(NamesPersonsDict);
+                PersonInput.ReadDispence(trip);
                 TripServices tripServices = new TripServices();
-                double averageSpent = tripServices.getAverageSpent(NamesPersonsDict);
-
-                // defining the sender and the receiver of money at the end of the trip 
+                double averageSpent = tripServices.getAverageSpent(trip);
                 List<Person> sendersList = new List<Person>(); 
                 List<Person> receiverList = new List<Person>();
-                foreach (Person person in NamesPersonsDict.Values)
+                foreach (Person person in trip.persons.Values)
                 {
                     person.diffrenceSpent = person.moneySpent - averageSpent;
                     if (person.diffrenceSpent > 0) { receiverList.Add(person); }

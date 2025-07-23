@@ -33,11 +33,11 @@ namespace Holidays._1__Services
 
         }
 
-        public double getAverageSpent(Dictionary<string, Person> NamesPersonsDict)
+        public double getAverageSpent(Trip trip)
         {
 
             List<double> dispences = new List<double>();
-            foreach (Person person in NamesPersonsDict.Values)
+            foreach (Person person in trip.persons.Values)
             {
                 dispences.Add(person.moneySpent);
             }
@@ -65,6 +65,14 @@ namespace Holidays._1__Services
         {
             person.moneySpent += coast;
             trip.totalSpent += coast;
+            Console.WriteLine($"you did spent{trip.totalSpent} out of {trip.budget}");
+        }
+
+        public  Person RandomPerson(Trip trip) 
+        {
+            Random random = new Random();
+            int randomIndex = random.Next(0, trip.persons.Count);
+            return trip.persons.Values.ElementAt(randomIndex);
         }
     }
 }
