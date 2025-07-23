@@ -73,7 +73,7 @@ namespace Holidays._2_Utils
             ReadCost(tripService, trip, name);
             while (true)
             {
-                Console.WriteLine("\t\tyou want to add an other spent ? (y/n)");
+                Console.WriteLine("\t\tyou want to add an other spent ? (y/n) \n\t\t -> ");
                 string again = Console.ReadLine()?.ToLower().Trim();
                 if(again == "y")
                 {
@@ -115,7 +115,7 @@ namespace Holidays._2_Utils
         {
             while (true)
             {
-                Console.Write("\t\t enter the coast -> ");
+                Console.Write("\t\t enter the coast \n\t\t -> ");
                 try
                 {
                     double coast = double.Parse(Console.ReadLine());

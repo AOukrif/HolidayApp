@@ -65,7 +65,7 @@ namespace Holidays._1__Services
         {
             person.moneySpent += coast;
             trip.totalSpent += coast;
-            Console.WriteLine($"you did spent{trip.totalSpent} out of {trip.budget}");
+            Console.WriteLine($"\t\t you did spent {trip.totalSpent} out of {trip.budget}");
         }
 
         public  Person RandomPerson(Trip trip) 

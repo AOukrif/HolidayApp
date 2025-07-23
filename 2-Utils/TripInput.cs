@@ -21,7 +21,7 @@ namespace Holidays._2_Utils
             double budget = ReadBudget();
             Dictionary<string, Person> persons = PersonInput.InitializePersons(numberOfPerson);
             Trip trip = new Trip(city, numberOfPerson,tripDay, budget, persons);
-            Console.WriteLine($"the trip to {city} is well created");
+            Console.WriteLine($"\n\t\t the trip to {city} is well created");
             return trip;
 
         }
@@ -48,7 +48,7 @@ namespace Holidays._2_Utils
             int input=0;
             while (true)
             {
-                Console.Write("\t\t How many person would you be ? \n\t\t ->");
+                Console.Write("How many person would you be ? \n\t\t ->");
                 try
                 {
                     input = int.Parse(Console.ReadLine());
@@ -60,7 +60,7 @@ namespace Holidays._2_Utils
                 }
                 if(input <= 0)
                 {
-                    Console.WriteLine("number of person must be positive");
+                    Console.WriteLine("\n\t\tnumber of person must be positive");
                     continue;
                 }
                 break;
@@ -98,7 +98,7 @@ namespace Holidays._2_Utils
             double input=0;
             while (true)
             {
-                Console.Write("\n\t\twhat is you budget ? -> \n\t\t ");
+                Console.Write("\n\t\twhat is you budget ?\n\t\t ->  ");
                 input= double.Parse(Console.ReadLine());
                 if (input < 0)
                 {
